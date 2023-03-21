@@ -24,7 +24,7 @@ function App() {
   // id값은 ref를 사용하여 변수로 담기
   const nextId = useRef(4)
 
-  // todolist를 목록으로 집어넣는 함수
+  // 추가하기
   const onInsert = useCallback(text => {
     const todo = {
       id: nextId.current, text, checked: false
@@ -35,11 +35,16 @@ function App() {
     [todos]
   )
 
+  // 제거하기
+  const onRemove = useCallback(id => {
+    setTodos(todos.filter(todo => todo.id !== id))
+  }, [todos])
+
   return (
     <TodoTemplate>
       {/* children의 값으로  <TodoInsert />와 <TodoList />가 전달된다. */}
       <TodoInsert onInsert={onInsert} />
-      <TodoList todos={todos} />
+      <TodoList todos={todos} onRemove={onRemove} />
     </TodoTemplate>
   );
 }
